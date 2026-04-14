@@ -1,262 +1,324 @@
-<!--
-NeuroVega — One-page static site (light theme, pitch-deck aligned)
-How to publish (Netlify Drop):
-1) Create a folder named "neurovega-site"
-2) Save THIS file as: index.html inside that folder
-3) Go to netlify.com → "Add new site" → "Deploy manually" (or just drag & drop the folder)
-4) (Optional) Connect your domain neurovega.org in Netlify → Domain settings
-
-A dev can later migrate this to Next.js/Astro/Webflow while keeping the same copy + structure.
--->
-
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="NeuroVega builds embodied AI designed to preserve, enrich and transmit human memory — privately, ethically, and locally." />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="NeuroVega builds embodied AI designed to preserve, enrich, and transmit human memory across generations — privately, ethically, and locally." />
   <title>NeuroVega — Where Humanity Lives On</title>
 
-  <!-- Social share (optional but nice) -->
   <meta property="og:title" content="NeuroVega — Where Humanity Lives On" />
-  <meta property="og:description" content="Embodied AI designed to preserve, enrich and transmit human memory — privately, ethically, and locally." />
+  <meta property="og:description" content="Embodied AI designed to preserve, enrich, and transmit human memory — privately, ethically, and locally." />
   <meta property="og:type" content="website" />
 
-  <!-- Fonts (safe + clean). If you prefer zero external calls, tell me and I’ll switch to system fonts only. -->
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="apple-touch-icon" href="logo.png" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    :root{
-      /* Pitch-deck style: light background */
-      --bg: #FFFFFF;
-      --text: #1E1E1E;
-      --muted: #667085;
-
-      /* NV palette (blue + violet + white) */
-      --blue: #2F5BFF;   /* primary */
-      --violet: #6D4AFF; /* secondary accent */
-
-      --line: rgba(17, 24, 39, 0.10);
-      --soft: rgba(47, 91, 255, 0.08);   /* blue tint */
-      --soft2: rgba(109, 74, 255, 0.10); /* violet tint */
-
-      --radius: 18px;
-      --max: 1100px;
+    :root {
+      --bg: #f7f8fa;
+      --surface: #ffffff;
+      --surface-soft: #f2f4f7;
+      --text: #0f1728;
+      --muted: #4f5b6f;
+      --line: #dfe5ee;
+      --accent: #2f5bff;
+      --accent-soft: #eef2ff;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+      --max: 1120px;
+      --shadow: 0 8px 26px rgba(15, 23, 40, 0.06);
     }
 
-    *{ box-sizing: border-box; }
-    html,body{ margin:0; padding:0; background:var(--bg); color:var(--text); }
-    body{
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      line-height: 1.55;
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
     }
 
-    a{ color: var(--blue); text-decoration: none; }
-    a:hover{ text-decoration: underline; }
+    img { max-width: 100%; display: block; }
 
-    .container{
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
       max-width: var(--max);
       margin: 0 auto;
-      padding: 28px 18px 60px;
+      padding: 24px 20px 72px;
     }
 
-    /* Top bar */
-    header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 14px;
-      padding: 8px 0 18px;
-    }
-    .brand{
-      display:flex; align-items:center; gap: 12px;
-      font-weight: 700;
-      letter-spacing: 0.2px;
-      font-family: "Space Grotesk", Inter, system-ui, sans-serif;
-      font-size: 18px;
-    }
-    .mark{
-      width: 34px; height: 34px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--blue), var(--violet));
-      box-shadow: 0 10px 25px rgba(47, 91, 255, 0.18);
-      flex: 0 0 auto;
-    }
-    nav{
-      display:flex; gap: 14px; flex-wrap: wrap;
-      font-size: 14px;
-      color: var(--muted);
-    }
-    nav a{ color: var(--muted); }
-    nav a:hover{ color: var(--blue); text-decoration: none; }
-
-    /* Hero */
-    .hero{
-      margin-top: 12px;
-      padding: 34px 26px;
+    header {
+      position: sticky;
+      top: 12px;
+      z-index: 10;
       border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background:
-        radial-gradient(900px 300px at 15% 0%, var(--soft) 0%, transparent 60%),
-        radial-gradient(600px 300px at 85% 30%, var(--soft2) 0%, transparent 55%),
-        #fff;
-    }
-    .kicker{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      font-size: 13px;
-      color: var(--muted);
-      border: 1px solid var(--line);
-      padding: 6px 10px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
       border-radius: 999px;
-      background: rgba(255,255,255,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 12px 20px;
+      box-shadow: 0 4px 20px rgba(15, 23, 40, 0.04);
     }
-    .dot{
-      width: 8px; height: 8px; border-radius: 99px;
-      background: var(--blue);
-      box-shadow: 0 0 0 4px rgba(47,91,255,0.12);
-    }
-    h1{
-      margin: 14px 0 10px;
-      font-family: "Space Grotesk", Inter, system-ui, sans-serif;
-      font-size: clamp(34px, 5vw, 54px);
-      line-height: 1.05;
-      letter-spacing: -0.6px;
-    }
-    .tagline{
-      margin: 0 0 18px;
-      font-size: 18px;
-      color: var(--muted);
-      max-width: 70ch;
-    }
-    .cta-row{
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap: 10px;
-      padding: 10px 14px;
-      border-radius: 14px;
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
       font-weight: 600;
-      font-size: 14px;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+
+    .brand-logo {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    nav {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    nav a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      padding: 6px 0;
+      transition: color 140ms ease;
+    }
+
+    nav a:hover,
+    nav a:focus-visible { color: var(--accent); }
+
+    .hero {
+      margin-top: 42px;
+      padding: 72px 56px;
+      border-radius: 32px;
       border: 1px solid var(--line);
-      background: #fff;
+      background: radial-gradient(circle at 20% -10%, #f4f7ff 0%, transparent 42%), var(--surface);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 12px;
+      color: var(--muted);
+      background: var(--surface-soft);
+    }
+
+    .eyebrow-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    h1 {
+      margin: 18px auto 16px;
+      max-width: 18ch;
+      font-size: clamp(2.2rem, 6vw, 4.2rem);
+      line-height: 1.07;
+      letter-spacing: -0.03em;
+    }
+
+    .hero p {
+      max-width: 64ch;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: clamp(1rem, 2.4vw, 1.2rem);
+    }
+
+    .cta-row {
+      margin-top: 28px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 160ms ease;
+      background: var(--surface);
       color: var(--text);
     }
-    .btn.primary{
-      background: linear-gradient(135deg, var(--blue), var(--violet));
-      border-color: transparent;
+
+    .btn:hover { border-color: #cdd6e4; }
+
+    .btn.primary {
+      border-color: var(--accent);
+      background: var(--accent);
       color: #fff;
-      box-shadow: 0 10px 24px rgba(47, 91, 255, 0.18);
     }
-    .btn.primary:hover{ filter: brightness(0.98); text-decoration:none; }
-    .btn:hover{ text-decoration:none; border-color: rgba(47,91,255,0.35); }
 
-    /* Sections */
-    .grid{
-      display:grid;
+    .btn.primary:hover { background: #294ee0; }
+
+    section + section { margin-top: 18px; }
+
+    .grid {
+      display: grid;
+      gap: 18px;
       grid-template-columns: 1fr;
-      gap: 16px;
-      margin-top: 18px;
-    }
-    @media (min-width: 900px){
-      .grid{ grid-template-columns: 1.2fr 0.8fr; }
     }
 
-    .card{
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 22px 20px;
-      background: #fff;
+    @media (min-width: 900px) {
+      .grid.two-col { grid-template-columns: 1.1fr 0.9fr; }
     }
-    .card h2{
-      margin: 0 0 10px;
-      font-family: "Space Grotesk", Inter, system-ui, sans-serif;
-      font-size: 20px;
-      letter-spacing: -0.2px;
-    }
-    .card p{ margin: 0 0 10px; color: var(--text); }
-    .card p.muted{ color: var(--muted); }
 
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 12px;
+    .card {
       border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      padding: 30px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h2 {
+      margin: 0 0 12px;
+      font-size: clamp(1.35rem, 2.5vw, 1.8rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    .card p {
+      margin: 0;
       color: var(--muted);
-      background: rgba(47,91,255,0.05);
     }
 
-    .list{
-      margin: 12px 0 0;
+    .card p + p { margin-top: 12px; }
+
+    .list {
+      margin: 16px 0 0;
       padding: 0;
       list-style: none;
       display: grid;
       gap: 10px;
     }
-    .li{
-      display:flex;
-      gap: 10px;
-      align-items:flex-start;
-      padding: 10px 12px;
+
+    .list li {
       border: 1px solid var(--line);
-      border-radius: 14px;
-      background: #fff;
-    }
-    .icon{
-      width: 10px; height: 10px; border-radius: 99px;
-      background: var(--violet);
-      box-shadow: 0 0 0 4px rgba(109,74,255,0.10);
-      margin-top: 6px;
-      flex: 0 0 auto;
-    }
-
-    /* Footer */
-    footer{
-      margin-top: 26px;
-      padding-top: 18px;
-      border-top: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: #fcfdff;
+      padding: 12px 14px;
       color: var(--muted);
-      font-size: 13px;
-      display:flex;
-      gap: 10px;
-      justify-content: space-between;
-      flex-wrap: wrap;
+      font-size: 0.95rem;
     }
 
-    /* Small highlight line */
-    .accent-line{
-      height: 2px;
-      width: 100%;
-      margin: 16px 0 0;
-      border-radius: 99px;
-      background: linear-gradient(90deg, var(--blue), var(--violet));
-      opacity: 0.85;
+    .list b { color: var(--text); }
+
+    .label {
+      display: inline-block;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      border: 1px solid #d8e1ff;
+      color: #2141b4;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 10px;
+      margin-bottom: 14px;
+    }
+
+    .nero-layout {
+      display: grid;
+      gap: 22px;
+      align-items: center;
+      grid-template-columns: 1fr;
+    }
+
+    .nero-visual {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 16px;
+      background: linear-gradient(180deg, #f9fbff 0%, #f2f6ff 100%);
+    }
+
+    .nero-visual img {
+      width: min(320px, 100%);
+      margin: 0 auto;
+      height: auto;
+      object-fit: contain;
+    }
+
+    @media (min-width: 900px) {
+      .nero-layout { grid-template-columns: 1.1fr 0.9fr; }
+    }
+
+    .status-line {
+      margin-top: 14px;
+      font-size: 13px;
+      color: #66738a;
+    }
+
+    footer {
+      margin-top: 24px;
+      border-top: 1px solid var(--line);
+      padding: 18px 2px 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: #6a7589;
+      font-size: 13px;
+    }
+
+    @media (max-width: 720px) {
+      .container { padding: 16px 14px 54px; }
+      header {
+        position: static;
+        border-radius: 18px;
+        padding: 12px 14px;
+      }
+      nav { gap: 12px; }
+      .hero {
+        margin-top: 14px;
+        padding: 46px 20px;
+        border-radius: 24px;
+      }
+      .card {
+        border-radius: 20px;
+        padding: 22px;
+      }
     }
   </style>
 </head>
-
 <body>
   <div class="container">
-
     <header>
-      <div class="brand">
-        <div class="mark" aria-hidden="true"></div>
-        <div>NeuroVega</div>
-      </div>
+      <a class="brand" href="#top" aria-label="NeuroVega home">
+        <img class="brand-logo" src="logo.png" alt="NeuroVega logo" />
+        <span>NeuroVega</span>
+      </a>
       <nav aria-label="Primary">
         <a href="#vision">Vision</a>
         <a href="#nero">NERO</a>
@@ -266,10 +328,10 @@ A dev can later migrate this to Next.js/Astro/Webflow while keeping the same cop
       </nav>
     </header>
 
-    <section class="hero" id="top">
-      <div class="kicker"><span class="dot" aria-hidden="true"></span>Embodied AI • Human memory • Privacy-first</div>
-      <h1>Where Humanity Lives On.</h1>
-      <p class="tagline">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>Embodied AI • Human memory • Privacy-first</div>
+      <h1 id="hero-title">Where memory remains close, alive, and meaningful.</h1>
+      <p>
         NeuroVega develops embodied AI designed to preserve, enrich, and transmit human memory across generations —
         privately, ethically, and locally.
       </p>
@@ -277,88 +339,80 @@ A dev can later migrate this to Next.js/Astro/Webflow while keeping the same cop
         <a class="btn primary" href="#contact">Contact</a>
         <a class="btn" href="#nero">Discover NERO</a>
       </div>
-      <div class="accent-line" aria-hidden="true"></div>
     </section>
 
-    <section class="grid">
-      <div class="card" id="vision">
+    <section class="grid two-col" id="vision" aria-label="Vision and principles">
+      <article class="card">
         <h2>Vision</h2>
-        <p class="muted">
-          Families lose the stories of their elders. Memories scatter across devices and platforms, and meaningful
-          transmission becomes difficult. NeuroVega’s mission is to create a tangible, long-lived companion that helps
-          people capture, organize and pass on authentic memories—without turning life into a cloud product.
+        <p>
+          Families often lose stories that should have endured. Memories become fragmented across devices,
+          platforms, and time.
         </p>
-        <p class="muted">
-          We believe the next relationship between humans and machines should be <b>personal</b>, <b>safe</b>, and
-          <b>human-centered</b>.
+        <p>
+          NeuroVega’s mission is to build a tangible companion that helps people preserve authentic life memories and
+          pass them on with clarity, dignity, and continuity.
         </p>
-      </div>
+      </article>
 
       <aside class="card">
         <h2>Principles</h2>
         <ul class="list">
-          <li class="li"><span class="icon" aria-hidden="true"></span><div><b>Privacy by design</b><br><span class="muted">Local-first architecture. User control over data.</span></div></li>
-          <li class="li"><span class="icon" aria-hidden="true"></span><div><b>Authentic memory</b><br><span class="muted">Preserve real content from life—voice, photos, videos, notes.</span></div></li>
-          <li class="li"><span class="icon" aria-hidden="true"></span><div><b>Ethical boundaries</b><br><span class="muted">No “deathbot” simulation. No deepfake-based substitutes.</span></div></li>
+          <li><b>Privacy by design</b><br>Local-first architecture with user control over personal data.</li>
+          <li><b>Authentic memory</b><br>Built around life-recorded voice, photos, videos, and notes.</li>
+          <li><b>Human boundaries</b><br>No deepfake substitute, no artificial afterlife simulation.</li>
         </ul>
       </aside>
     </section>
 
-    <section class="grid" style="margin-top:16px;">
-      <div class="card" id="nero">
-        <h2>NERO</h2>
-        <span class="pill">AI companion • Memory-preserving robot</span>
-        <p style="margin-top:12px;">
-          NERO is a personal AI companion designed to record, preserve and share meaningful memories:
-          voice, photos, videos and life notes—through natural interaction and a tangible presence.
-        </p>
-        <p class="muted">
-          NERO is built to support intergenerational transmission: a “living time capsule” that can remain close to you
-          or be passed on—while keeping ownership and control in the hands of the user.
-        </p>
+    <section class="card" id="nero" aria-label="NERO section">
+      <span class="label">NERO • AI memory companion</span>
+      <div class="nero-layout">
+        <div>
+          <h2>NERO</h2>
+          <p>
+            NERO is a personal AI companion designed to preserve meaningful moments through natural interaction and
+            embodied presence.
+          </p>
+          <p>
+            It supports intergenerational transmission by helping people keep memory close over time — as a living
+            archive that remains under the user’s ownership.
+          </p>
+        </div>
+        <div class="nero-visual">
+          <img src="nero.png" alt="NERO companion robot" />
+        </div>
       </div>
+    </section>
 
-      <aside class="card" id="ethics">
+    <section class="grid two-col" id="ethics" aria-label="Ethics privacy status contact">
+      <article class="card">
         <h2>Ethics & Privacy</h2>
-        <p class="muted">
-          NeuroVega positions NERO as a healthy alternative to “AI afterlife” products.
-          NERO focuses on <b>authentic memories captured during life</b>, not on generating post-mortem illusions.
+        <p>
+          NeuroVega positions NERO as a healthy alternative to AI afterlife products. The focus is on authentic
+          memories captured during life, never on replacing a person.
         </p>
         <ul class="list">
-          <li class="li"><span class="icon" aria-hidden="true"></span><div><b>No mandatory cloud</b><br><span class="muted">Data stays under user control.</span></div></li>
-          <li class="li"><span class="icon" aria-hidden="true"></span><div><b>Transparency</b><br><span class="muted">Clear boundaries and documented behavior.</span></div></li>
-          <li class="li"><span class="icon" aria-hidden="true"></span><div><b>Consent & ownership</b><br><span class="muted">The user remains the owner of their memories.</span></div></li>
+          <li><b>No mandatory cloud</b><br>Memory remains under user control.</li>
+          <li><b>Transparent behavior</b><br>Clear boundaries and explicit design choices.</li>
+          <li><b>Consent and ownership</b><br>Users remain owners of their memories.</li>
         </ul>
-      </aside>
+      </article>
+
+      <article class="card" id="status">
+        <h2>Status</h2>
+        <p>
+          NeuroVega is currently in a research and prototyping phase, focused on validating the product foundations and
+          local-first architecture.
+        </p>
+        <p class="status-line">Public communication remains intentionally concise until the prototype is demonstrable.</p>
+      </article>
     </section>
 
-    <section class="grid" style="margin-top:16px;">
-      <div class="card" id="status">
-        <h2>Project Status</h2>
-        <p class="muted">
-          NeuroVega is currently in a <b>research & prototyping phase</b>. The focus is on building a functional prototype,
-          validating the local-first architecture, and preparing the product for future industrialization.
-        </p>
-        <p class="muted">
-          Public communication remains intentionally lightweight until the prototype is demonstrable.
-        </p>
-      </div>
-
-      <aside class="card" id="contact">
-        <h2>Contact</h2>
-        <p class="muted" style="margin-bottom:14px;">
-          For partnerships, funding, or press:
-        </p>
-        <p style="margin:0 0 8px;"><b>Email:</b> <a href="mailto:founder@neurovega.org">founder@neurovega.org</a></p>
-        <p style="margin:0 0 14px;"><b>Location:</b> Paris, France</p>
-        <!-- Optional: add LinkedIn later -->
-        <!-- <p style="margin:0;"><b>LinkedIn:</b> <a href="#">Add your link</a></p> -->
-
-        <div class="accent-line" aria-hidden="true" style="margin-top:16px;"></div>
-        <p class="muted" style="margin-top:14px; font-size:13px;">
-          Note: Details such as roadmap, pricing, and commercialization milestones are shared privately with relevant stakeholders.
-        </p>
-      </aside>
+    <section class="card" id="contact" aria-label="Contact">
+      <h2>Contact</h2>
+      <p>For partnerships, funding, or press inquiries:</p>
+      <p><b>Email:</b> <a href="mailto:founder@neurovega.org" style="color: var(--accent);">founder@neurovega.org</a></p>
+      <p><b>Location:</b> Paris, France</p>
     </section>
 
     <footer>
@@ -368,7 +422,6 @@ A dev can later migrate this to Next.js/Astro/Webflow while keeping the same cop
   </div>
 
   <script>
-    // Tiny helper for the footer year
     document.getElementById("y").textContent = new Date().getFullYear();
   </script>
 </body>
